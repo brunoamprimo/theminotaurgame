@@ -1,0 +1,35 @@
+package main;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+public class Texture {
+	public int[] pixels;
+	private String loc;
+	public final int SIZE;
+	
+	public Texture(String location, int size) {
+		loc = location;
+		SIZE = size;
+		pixels = new int[SIZE * SIZE];
+		load();
+	}
+	
+	private void load() {
+		try {
+			BufferedImage image = ImageIO.read(Game.class.getResourceAsStream(loc));
+			int w = image.getWidth();
+			int h = image.getHeight();
+			image.getRGB(0, 0, w, h, pixels, 0, w);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static Texture lvl1wall = new Texture("/tm2lvl1.png", 64);
+	public static Texture lvl2wall = new Texture("/tm2lvl2.png", 64);
+	public static Texture lvl3wall = new Texture("/lvl3wall_1.png", 64);
+	public static Texture MINOTAUR = new Texture("/hog ridaaa.png", 64);
+}
