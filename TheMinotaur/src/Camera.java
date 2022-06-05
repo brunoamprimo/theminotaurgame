@@ -14,7 +14,7 @@ public class Camera implements KeyListener {
 	public CameraDir camdir;
 	public Game gameinst;
 	
-	public Camera(double x, double y, double xd, double yd, double xp, double yp, CameraDir camdirn, Game gamec) {	
+	public Camera(double x, double y, double xd, double yd, double xp, double yp, CameraDir camdirn, Game gamec) { // initialize the camera
 		xPos = x + 0.5;
 		yPos = y + 0.5;
 		xDir = xd;
@@ -25,7 +25,7 @@ public class Camera implements KeyListener {
 		gameinst = gamec;
 	}
 	
-	public void keyPressed(KeyEvent key) {
+	public void keyPressed(KeyEvent key) { // event where it tracks a key press
 		if((key.getKeyCode() == KeyEvent.VK_LEFT))
 			left = true;
 		if((key.getKeyCode() == KeyEvent.VK_RIGHT))
@@ -37,7 +37,7 @@ public class Camera implements KeyListener {
 //			back = true;
 	}
 	
-	public void keyReleased(KeyEvent key) {
+	public void keyReleased(KeyEvent key) { // event where it tracks a key release
 		//////////////
 		gameinst.KR_Method(key);
 		//////////////
@@ -58,7 +58,7 @@ public class Camera implements KeyListener {
 			xPos -= 1;
 		}else if(d == Direction.DOWN) {
 			xPos += 1;
-		}else if(d == Direction.RIGHT) { // swap right/left maybe
+		}else if(d == Direction.RIGHT) {
 			yPos += 1;
 		}else if(d == Direction.LEFT) {
 			yPos -= 1;
@@ -66,11 +66,13 @@ public class Camera implements KeyListener {
 	}
 	
 	@Override
-	public void keyTyped(KeyEvent key) {
+	public void keyTyped(KeyEvent key) { // default method
 		
 	}
 	
 	public void update(int[][] map) {
+		// basically gets the x and y positions and determines if the space in the 2D array is 0 (which means you can pass through it)
+		// forward/back adds and removes x/y position respectively
 		if(forward) {
 			if(map[(int)(xPos + xDir * MOVE_SPEED)][(int)yPos] == 0) {
 				xPos+=xDir*MOVE_SPEED;
@@ -84,6 +86,7 @@ public class Camera implements KeyListener {
 			if(map[(int)xPos][(int)(yPos - yDir * MOVE_SPEED)]==0)
 				yPos-=yDir*MOVE_SPEED;
 		}
+		// determines camera rotation. the placeholder values are for so that yDir and yPlane are calculated accordingly
 		if(right) {
 			double oldxDir=xDir;
 			xDir=xDir*Math.cos(-ROTATION_SPEED) - yDir*Math.sin(-ROTATION_SPEED);
@@ -100,6 +103,7 @@ public class Camera implements KeyListener {
 			xPlane=xPlane*Math.cos(ROTATION_SPEED) - yPlane*Math.sin(ROTATION_SPEED);
 			yPlane=oldxPlane*Math.sin(ROTATION_SPEED) + yPlane*Math.cos(ROTATION_SPEED);
 		}
+		// this basically gets the angle and if it's past a certain point, then it's considered as the player wanting to move down/left/up/right.
 		Direction newdir = camdir.getDir();
 		if(yPlane <= -0.34) { // Down
 			camdir.setDir(Direction.DOWN);
