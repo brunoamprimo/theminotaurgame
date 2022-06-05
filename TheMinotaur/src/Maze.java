@@ -2,6 +2,8 @@ import java.util.Arrays;
 
 public class Maze {
 
+	// declarations and getter methods
+	
 	private Maps map;
 	private Location spawn;
 	private Location end;
@@ -24,7 +26,7 @@ public class Maze {
 		return swords;
 	}
 	
-	public void removeSword(int i) {
+	public void removeSword(int i) { // removes sword option by determining if there is an enemy in the player's position
 		Location[] swordsC = new Location[swords.length - 1];
 		for(int b = 0; b < swordsC.length; b++) {
 			if(b != i) {
@@ -38,7 +40,7 @@ public class Maze {
 		return explosivetrap;
 	}
 
-	public Maze(int x) {
+	public Maze(int x) { // crappily made but works. it initializes the locations of the spawn, goal, and swords based on the map selected from the x int
 		if(x == 1){
 			map = Maps.Map1;
 			spawn = new Location(6, 4); // 6, 4
