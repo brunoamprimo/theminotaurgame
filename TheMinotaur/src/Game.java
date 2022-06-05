@@ -369,7 +369,7 @@ public class Game extends JFrame implements Runnable {
 		dtext.setVerticalAlignment(SwingConstants.TOP);
 		dtext.setVisible(true); add(dtext);
 		// Class Data (super important, also very inefficient)
-		if(mapSelected == 1) {
+		if(mapSelected == 1) { // selects map
 			maze = new Maze(mapSelected); 
 			plr = new Player(maze.getSpawn());
 			// Minotaurs in levels
